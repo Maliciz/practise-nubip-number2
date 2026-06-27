@@ -15,24 +15,19 @@ namespace practise_nubip_number2
             InitializeComponent();
         }
 
-        /// <summary>
-        /// Подія завантаження форми: ініціалізація списку фізичних дисків.
-        /// </summary>
+
         private void Form1_Load(object sender, EventArgs e)
         {
-            // Застосовуємо тему 2000s Anime
             ThemeHelper.Apply2000sAnimeTheme(this);
             this.Text = "✧ 2000s Cyber-File-Manager v1.0.3 [Lain-inspired] ✧";
 
             lblDiskSpace.Text = "(｀・ω・´) Вільний простір: очікування...";
-            lblFileDetails.Text = "(=^･^=) Семпай, обери файл для перегляду деталей.";
+            lblFileDetails.Text = "(=^･^=) обери файл для перегляду деталей.";
 
             RefreshDrivesList();
         }
 
-        /// <summary>
-        /// Оновлення та відображення списку доступних дисків у cmbDrives.
-        /// </summary>
+
         private void RefreshDrivesList()
         {
             cmbDrives.Items.Clear();
@@ -379,7 +374,7 @@ namespace practise_nubip_number2
             }
             else
             {
-                lblFileDetails.Text = "(=^･^=) Семпай, обери файл для перегляду деталей.";
+                lblFileDetails.Text = "(=^･^=) обери файл для перегляду деталей.";
             }
         }
 
@@ -563,7 +558,7 @@ namespace practise_nubip_number2
         {
             if (tvFolders.SelectedNode == null || tvFolders.SelectedNode.Tag == null)
             {
-                MessageBox.Show("(=^･^=) Семпай, обери папку для пошуку у лівій панелі!", "Попередження", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("(=^･^=) обери папку для пошуку у лівій панелі!", "Попередження", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 

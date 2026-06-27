@@ -1,0 +1,14 @@
+C:\Users\mksmb\Documents\practise-2\practise-nubip-number2\bin\Debug\net10.0-windows\practise-nubip-number2.exe
+C:\Users\mksmb\Documents\practise-2\practise-nubip-number2\bin\Debug\net10.0-windows\practise-nubip-number2.deps.json
+C:\Users\mksmb\Documents\practise-2\practise-nubip-number2\bin\Debug\net10.0-windows\practise-nubip-number2.runtimeconfig.json
+C:\Users\mksmb\Documents\practise-2\practise-nubip-number2\bin\Debug\net10.0-windows\practise-nubip-number2.dll
+C:\Users\mksmb\Documents\practise-2\practise-nubip-number2\bin\Debug\net10.0-windows\practise-nubip-number2.pdb
+C:\Users\mksmb\Documents\practise-2\practise-nubip-number2\obj\Debug\net10.0-windows\practise-nubip-number2.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\mksmb\Documents\practise-2\practise-nubip-number2\obj\Debug\net10.0-windows\practise-nubip-number2.AssemblyInfoInputs.cache
+C:\Users\mksmb\Documents\practise-2\practise-nubip-number2\obj\Debug\net10.0-windows\practise-nubip-number2.AssemblyInfo.cs
+C:\Users\mksmb\Documents\practise-2\practise-nubip-number2\obj\Debug\net10.0-windows\practise-nubip-number2.csproj.CoreCompileInputs.cache
+C:\Users\mksmb\Documents\practise-2\practise-nubip-number2\obj\Debug\net10.0-windows\practise-nubip-number2.dll
+C:\Users\mksmb\Documents\practise-2\practise-nubip-number2\obj\Debug\net10.0-windows\refint\practise-nubip-number2.dll
+C:\Users\mksmb\Documents\practise-2\practise-nubip-number2\obj\Debug\net10.0-windows\practise-nubip-number2.pdb
+C:\Users\mksmb\Documents\practise-2\practise-nubip-number2\obj\Debug\net10.0-windows\practise-nubip-number2.genruntimeconfig.cache
+C:\Users\mksmb\Documents\practise-2\practise-nubip-number2\obj\Debug\net10.0-windows\ref\practise-nubip-number2.dll

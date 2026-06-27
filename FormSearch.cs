@@ -24,6 +24,10 @@ namespace practise_nubip_number2
             
             // Встановлюємо початкове значення дати як сьогоднішній день
             dtpDate.Value = DateTime.Today;
+
+            // Застосовуємо тему 2000s Anime
+            ThemeHelper.Apply2000sAnimeTheme(this);
+            this.Text = "🔍 Пошуковий модуль «СЕНСОР-02»";
         }
 
         /// <summary>
@@ -44,13 +48,13 @@ namespace practise_nubip_number2
                 }
                 else
                 {
-                    MessageBox.Show("Визначена початкова директорія не існує!", "Помилка", 
+                    MessageBox.Show("(＃`Д´) Визначена початкова директорія не існує!", "Помилка", 
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Сталася помилка при ініціалізації пошуку: {ex.Message}", "Помилка", 
+                MessageBox.Show($"(＞﹏＜) Сталася помилка при ініціалізації пошуку: {ex.Message}", "Помилка", 
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
@@ -60,7 +64,7 @@ namespace practise_nubip_number2
 
                 if (lbSearchResults.Items.Count == 0)
                 {
-                    MessageBox.Show("Файлів за вказаними критеріями не знайдено.", "Результат пошуку", 
+                    MessageBox.Show("(=^･^=) Файлів за вказаними критеріями не знайдено, Семпай.", "Результат пошуку", 
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }

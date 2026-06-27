@@ -20,6 +20,13 @@ namespace practise_nubip_number2
         /// </summary>
         private void Form1_Load(object sender, EventArgs e)
         {
+            // Застосовуємо тему 2000s Anime
+            ThemeHelper.Apply2000sAnimeTheme(this);
+            this.Text = "✧ 2000s Cyber-File-Manager v1.0.3 [Lain-inspired] ✧";
+
+            lblDiskSpace.Text = "(｀・ω・´) Вільний простір: очікування...";
+            lblFileDetails.Text = "(=^･^=) Семпай, обери файл для перегляду деталей.";
+
             RefreshDrivesList();
         }
 
@@ -231,12 +238,12 @@ namespace practise_nubip_number2
                         catch (UnauthorizedAccessException) { }
                     }
 
-                    lblFolderStats.Text = $"Файлів: {fileCount} | Загальний розмір: {FormatBytes(totalSize)}";
+                    lblFolderStats.Text = $"📁 Файлів: {fileCount} | Обсяг: {FormatBytes(totalSize)} (✿◠‿◠)";
                 }
             }
             catch (UnauthorizedAccessException)
             {
-                lblFolderStats.Text = "Доступ обмежено";
+                lblFolderStats.Text = "Доступ обмежено! (＃`Д´)";
             }
             catch (Exception ex)
             {
@@ -347,32 +354,32 @@ namespace practise_nubip_number2
                     if (fi.Exists)
                     {
                         lblFileDetails.Text = 
-                            $"Ім'я:\n{fi.Name}\n\n" +
+                            $"Ім'я:\n{fi.Name} (✿◠‿◠)\n\n" +
                             $"Повний шлях:\n{fi.FullName}\n\n" +
                             $"Розмір:\n{FormatBytes(fi.Length)} ({fi.Length} байт)\n\n" +
                             $"Створено:\n{fi.CreationTime:dd.MM.yyyy HH:mm:ss}\n\n" +
                             $"Змінено:\n{fi.LastWriteTime:dd.MM.yyyy HH:mm:ss}\n\n" +
                             $"Атрибути:\n" +
-                            $"{( (fi.Attributes & FileAttributes.ReadOnly) != 0 ? "☑ Тільки для читання" : "☐ Тільки для читання" )}\n" +
-                            $"{( (fi.Attributes & FileAttributes.Hidden) != 0 ? "☑ Прихований" : "☐ Прихований" )}\n" +
-                            $"{( (fi.Attributes & FileAttributes.Archive) != 0 ? "☑ Архівний" : "☐ Архівний" )}";
+                            $"{( (fi.Attributes & FileAttributes.ReadOnly) != 0 ? "☑ Тільки для читання (ReadOnly)" : "☐ Тільки для читання (ReadOnly)" )}\n" +
+                            $"{( (fi.Attributes & FileAttributes.Hidden) != 0 ? "☑ Прихований (Hidden)" : "☐ Прихований (Hidden)" )}\n" +
+                            $"{( (fi.Attributes & FileAttributes.Archive) != 0 ? "☑ Архівний (Archive)" : "☐ Архівний (Archive)" )}";
                         
                         // Записуємо поточне ім'я файлу в текстове поле для зручного редагування
                         txtInput.Text = Path.GetFileNameWithoutExtension(fi.Name);
                     }
                     else
                     {
-                        lblFileDetails.Text = "Файл не існує.";
+                        lblFileDetails.Text = "(✖﹏✖) Файл не існує.";
                     }
                 }
                 catch (Exception ex)
                 {
-                    lblFileDetails.Text = $"Не вдалося отримати деталі файлу:\n{ex.Message}";
+                    lblFileDetails.Text = $"(＞﹏＜) Не вдалося отримати деталі файлу:\n{ex.Message}";
                 }
             }
             else
             {
-                lblFileDetails.Text = "Оберіть файл для перегляду деталей.";
+                lblFileDetails.Text = "(=^･^=) Семпай, обери файл для перегляду деталей.";
             }
         }
 
@@ -523,12 +530,12 @@ namespace practise_nubip_number2
         {
             if (!(lbFiles.SelectedItem is FileItem selectedFile))
             {
-                MessageBox.Show("Оберіть файл для видалення!", "Увага", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("(=^･^=) Семпай, спочатку обери файл для видалення!", "Увага", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             string fileName = Path.GetFileName(selectedFile.FullPath);
-            var confirmResult = MessageBox.Show($"Ви дійсно бажаєте безповоротно видалити файл \"{fileName}\"?",
+            var confirmResult = MessageBox.Show($"Семпай, ти дійсно бажаєш безповоротно видалити файл \"{fileName}\"? (＞﹏＜)",
                 "Підтвердження видалення", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (confirmResult == DialogResult.Yes)
@@ -540,7 +547,7 @@ namespace practise_nubip_number2
                 }
                 catch (UnauthorizedAccessException)
                 {
-                    MessageBox.Show("Немає прав доступу для видалення файлу!", "Помилка доступу", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("(＃`Д´) Немає прав доступу для видалення файлу!", "Помилка доступу", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 catch (Exception ex)
                 {
@@ -556,7 +563,7 @@ namespace practise_nubip_number2
         {
             if (tvFolders.SelectedNode == null || tvFolders.SelectedNode.Tag == null)
             {
-                MessageBox.Show("Оберіть папку для пошуку у лівій панелі!", "Попередження", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("(=^･^=) Семпай, обери папку для пошуку у лівій панелі!", "Попередження", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 

@@ -19,7 +19,7 @@ namespace practise_nubip_number2
         private void Form1_Load(object sender, EventArgs e)
         {
             ThemeHelper.Apply2000sAnimeTheme(this);
-            this.Text = "✧ 2000s Cyber-File-Manager v1.0.3 [Lain-inspired] ✧";
+            this.Text = "✧ File-Manager v1.0.4 ✧";
 
             lblDiskSpace.Text = "(｀・ω・´) Вільний простір: очікування...";
             lblFileDetails.Text = "(=^･^=) обери файл для перегляду деталей.";
@@ -525,12 +525,12 @@ namespace practise_nubip_number2
         {
             if (!(lbFiles.SelectedItem is FileItem selectedFile))
             {
-                MessageBox.Show("(=^･^=) Семпай, спочатку обери файл для видалення!", "Увага", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("(=^･^=)спочатку обери файл для видалення!", "Увага", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             string fileName = Path.GetFileName(selectedFile.FullPath);
-            var confirmResult = MessageBox.Show($"Семпай, ти дійсно бажаєш безповоротно видалити файл \"{fileName}\"? (＞﹏＜)",
+            var confirmResult = MessageBox.Show($"ти дійсно бажаєш безповоротно видалити файл \"{fileName}\"? (＞﹏＜)",
                 "Підтвердження видалення", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (confirmResult == DialogResult.Yes)

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("practise-nubip-number2")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4ddb65bfe4a50d7441d5af29cad581245beab679")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+24f58f6476b3e67c881b63469f459786ea26167e")]
 [assembly: System.Reflection.AssemblyProductAttribute("practise-nubip-number2")]
 [assembly: System.Reflection.AssemblyTitleAttribute("practise-nubip-number2")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

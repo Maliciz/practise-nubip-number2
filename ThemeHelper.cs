@@ -17,10 +17,11 @@ namespace practise_nubip_number2
         {
             Color backColor = Color.FromArgb(24, 12, 36);        // Глибокий темно-фіолетовий
             Color panelColor = Color.FromArgb(36, 18, 54);       // Панельний фіолетовий
-            Color textNormal = Color.FromArgb(220, 200, 255);    // Лавандовий
-            Color textHighlight = Color.FromArgb(255, 105, 180);   // Рожевий неон (Neon Pink)
+            Color textNormal = Color.FromArgb(180, 165, 220);    // Лавандовий
+            Color textHighlight = Color.FromArgb(250, 180, 250);   // Темно-рожевий неон (Dark Pink)
             Color textAccent = Color.FromArgb(0, 255, 200);       // Кібер-бірюзовий (Cyber Cyan)
-            Color bgControl = Color.FromArgb(14, 6, 22);          // Найтемніший фіолетовий для списків/інпутів
+            Color bgControl = Color.FromArgb(14, 6, 22);    
+            Color transparentGrp = Color.FromArgb(40, 14, 6, 22);      // Найтемніший фіолетовий для списків/інпутів
 
             form.BackColor = backColor;
             form.ForeColor = textNormal;
@@ -63,7 +64,7 @@ namespace practise_nubip_number2
             }
 
             // 3. Зчитування URL фону форми (з background.txt або bacground.txt)
-            string bgUrl = "";
+            string bgUrl = "https://i.pinimg.com/originals/38/a9/89/38a989df19d45eb33fea760e87210192.gif";
             string bgFile1 = Path.Combine(imgPath, "background.txt");
             string bgFile2 = Path.Combine(imgPath, "bacground.txt");
             
@@ -75,17 +76,19 @@ namespace practise_nubip_number2
                 _ = LoadImageToControlAsync(form, bgUrl);
             }
 
-            // 4. Зчитування URL фону панелей (з Panel.txt)
-            string panelUrl = "";
+            // 4. Зчитування URL фону панелей (з Panel.txt) або завантаження локального файлу
+            string localPanelPath = Path.Combine(imgPath, "image.png");
+            string panelUrl = "https://i.pinimg.com/originals/a5/72/86/a5728664014feb0863f26a7d64a1bd77.gif";
             string panelFile = Path.Combine(imgPath, "Panel.txt");
             if (File.Exists(panelFile)) panelUrl = File.ReadAllText(panelFile).Trim();
 
             // 5. Рекурсивне застосування стилів до дочірніх елементів
-            ApplyToControls(form.Controls, backColor, panelColor, textNormal, textHighlight, textAccent, bgControl, mainFont, titleFont, panelUrl);
+            ApplyToControls(form.Controls, backColor, panelColor, textNormal, textHighlight, textAccent, bgControl, mainFont, titleFont, panelUrl, localPanelPath);
         }
 
-        private static void ApplyToControls(Control.ControlCollection controls, Color bg, Color panelBg, Color fg, Color fgHighlight, Color fgAccent, Color bgCtrl, Font font, Font titleFont, string panelUrl)
+        private static void ApplyToControls(Control.ControlCollection controls, Color bg, Color panelBg, Color fg, Color fgHighlight, Color fgAccent, Color bgCtrl, Font font, Font titleFont, string panelUrl, string localPanelPath)
         {
+            Color transparentGrp = Color.FromArgb(128, bgCtrl.R, bgCtrl.G, bgCtrl.B);
             foreach (Control ctrl in controls)
             {
                 ctrl.Font = font;
@@ -127,21 +130,99 @@ namespace practise_nubip_number2
                 else if (ctrl is GroupBox grp)
                 {
                     grp.ForeColor = fgHighlight;
-                    grp.BackColor = Color.Transparent; // Робимо прозорим, щоб бачити фон форми
-                    ApplyToControls(grp.Controls, bg, panelBg, fg, fgHighlight, fgAccent, bgCtrl, font, titleFont, panelUrl);
+                    grp.BackColor = transparentGrp;
+                    
+                    if (!string.IsNullOrEmpty(localPanelPath))
+                    {
+                        string imgDir = Path.GetDirectoryName(localPanelPath) ?? "";
+                        string icoPath = Path.Combine(imgDir, "f250ad6b44f83aa6c176c5d295f1466d.gif");
+                        if (File.Exists(icoPath))
+                        {
+                            try
+                            {
+                                Image gifImg = Image.FromFile(icoPath);
+
+                                // Запуск анімації кадрів GIF
+                                if (ImageAnimator.CanAnimate(gifImg))
+                                {
+                                    ImageAnimator.Animate(gifImg, (s, ev) =>
+                                    {
+                                        if (grp.IsDisposed) return;
+                                        try
+                                        {
+                                            grp.BeginInvoke(new Action(() => grp.Invalidate()));
+                                        }
+                                        catch { }
+                                    });
+                                }
+
+                                // Додаємо обробник малювання, який оновлює кадри та малює GIF з 50% прозорістю
+                                grp.Paint += (s, pe) =>
+                                {
+                                    try
+                                    {
+                                        ImageAnimator.UpdateFrames(gifImg);
+
+                                        System.Drawing.Imaging.ColorMatrix matrix = new System.Drawing.Imaging.ColorMatrix();
+                                        matrix.Matrix33 = 0.5f; // 50% прозорості для кадрів GIF
+
+                                        using (System.Drawing.Imaging.ImageAttributes attr = new System.Drawing.Imaging.ImageAttributes())
+                                        {
+                                            attr.SetColorMatrix(matrix, System.Drawing.Imaging.ColorMatrixFlag.Default, System.Drawing.Imaging.ColorAdjustType.Bitmap);
+                                            
+                                            pe.Graphics.DrawImage(
+                                                gifImg, 
+                                                grp.ClientRectangle, 
+                                                0, 0, gifImg.Width, gifImg.Height, 
+                                                GraphicsUnit.Pixel, 
+                                                attr
+                                            );
+                                        }
+                                    }
+                                    catch { }
+                                };
+
+                                // Визволяємо ресурси при закритті форми
+                                grp.Disposed += (s, ev) =>
+                                {
+                                    try { gifImg.Dispose(); } catch { }
+                                };
+                            }
+                            catch { }
+                        }
+                    }
+                    
+                    ApplyToControls(grp.Controls, bg, panelBg, fg, fgHighlight, fgAccent, transparentGrp, font, titleFont, panelUrl, localPanelPath);
                 }
                 else if (ctrl is Panel pnl)
                 {
                     pnl.BackColor = panelBg;
-                    if (!string.IsNullOrEmpty(panelUrl))
+                    bool loadedLocal = false;
+                    
+                    if (!string.IsNullOrEmpty(localPanelPath) && File.Exists(localPanelPath))
+                    {
+                        try
+                        {
+                            pnl.BackgroundImage = Image.FromFile(localPanelPath);
+                            pnl.BackgroundImageLayout = ImageLayout.Stretch;
+                            loadedLocal = true;
+                        }
+                        catch { }
+                    }
+
+                    if (!loadedLocal && !string.IsNullOrEmpty(panelUrl))
                     {
                         _ = LoadImageToControlAsync(pnl, panelUrl);
                     }
-                    ApplyToControls(pnl.Controls, bg, panelBg, fg, fgHighlight, fgAccent, bgCtrl, font, titleFont, panelUrl);
+                    ApplyToControls(pnl.Controls, bg, panelBg, fg, fgHighlight, fgAccent, bgCtrl, font, titleFont, panelUrl, localPanelPath);
                 }
                 else if (ctrl is Label lbl)
                 {
-                    if (lbl.Name.Contains("Header") || lbl.Name.Contains("Stats"))
+                    if (lbl.Name.Contains("Details") || lbl.Name.Contains("FileDetails"))
+                    {
+                        lbl.ForeColor = Color.White;
+                    }
+                    else if (lbl.Name.Contains("Header") || lbl.Name.Contains("Stats"))
                     {
                         lbl.ForeColor = fgAccent;
                     }
@@ -221,6 +302,32 @@ namespace practise_nubip_number2
             catch
             {
                 // Не вдалося завантажити картинку — залишається дефолтний колір
+            }
+        }
+
+        /// <summary>
+        /// Змінює прозорість зображення за допомогою ColorMatrix.
+        /// </summary>
+        private static Image SetImageOpacity(Image image, float opacity)
+        {
+            try
+            {
+                Bitmap bmp = new Bitmap(image.Width, image.Height);
+                using (Graphics g = Graphics.FromImage(bmp))
+                {
+                    System.Drawing.Imaging.ColorMatrix matrix = new System.Drawing.Imaging.ColorMatrix();
+                    matrix.Matrix33 = opacity; // Значення прозорості за індексом [3, 3]
+                    
+                    System.Drawing.Imaging.ImageAttributes attributes = new System.Drawing.Imaging.ImageAttributes();
+                    attributes.SetColorMatrix(matrix, System.Drawing.Imaging.ColorMatrixFlag.Default, System.Drawing.Imaging.ColorAdjustType.Bitmap);
+                    
+                    g.DrawImage(image, new Rectangle(0, 0, bmp.Width, bmp.Height), 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, attributes);
+                }
+                return bmp;
+            }
+            catch
+            {
+                return image;
             }
         }
     }
